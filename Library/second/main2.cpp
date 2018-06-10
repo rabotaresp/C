@@ -70,7 +70,7 @@ void reader_book_rw()
 		std::ofstream read_book ("Reader.bin");
 		read_book.write(reinterpret_cast<char*>(&arr_r),sizeof(arr_r));
 		read_book.close();
-	}		
+	}	
 }
 void reader_book_r()
 {	
@@ -100,7 +100,7 @@ void reader_book_r()
 					std::cout << arr_r[i].Id_r << ' ' << arr_r[i].Name_r << std::endl;
 					for (int j = 0; j<2; j++)
 					{
-						std::cout << arr_r[i].Book_r[j] << ' ';
+						std::cout << "#"<< j+1 << ':' << arr_r[i].Book_r[j] << ' ';
 					}
 					std::cout << std::endl;
 				}
@@ -121,7 +121,7 @@ void reader_book_r()
 				std::cout << arr_r[numb_r-1].Id_r << ' ' << arr_r[numb_r-1].Name_r << std::endl;
 				for (int j = 0; j<2; j++)
 				{
-					std::cout << arr_r[numb_r-1].Book_r[j] << ' ';
+					std::cout << "#"<< j+1 << ':'  << arr_r[numb_r-1].Book_r[j] << ' ';
 				}
 				std::cout << std::endl;
 			}
@@ -140,7 +140,7 @@ void reader_book_r()
 void reader_removed()
 {	
 	int count;
-	int choice;
+	int choice_rem;
 	std::fstream count_r ("count.txt");
 	count_r >> count;
 	count_r.close();
@@ -166,8 +166,8 @@ void reader_removed()
 			}
 		}
 		std::cout << "Imput numb reader for removed: " << std::endl;
-		std::cin >> choice;
-		arr_r[choice-1].Flag_r = 0;
+		std::cin >> choice_rem;
+		arr_r[choice_rem-1].Flag_r = 0;
 		std::ofstream read_book ("Reader.bin");
 		read_book.write(reinterpret_cast<char*>(&arr_r),sizeof(arr_r));
 		read_book.close();
@@ -176,7 +176,13 @@ void reader_removed()
 
 void rw_read()
 {
-	reader arr[2];
+	int count;
+	int choice_b;
+	int numb_r;
+	std::fstream count_r ("count.txt");
+	count_r >> count;													
+	count_r.close(); 
+	reader arr[count];
 	std::fstream read_book ("Reader.bin");
 	for (int i = 0; read_book; i++)
 	{
@@ -184,12 +190,29 @@ void rw_read()
 	}
 	read_book.open("Reader.bin", std::ios::trunc);
 	read_book.close();
+	std::cout << "Imput numb reader for view: ";
+	std::cin >> numb_r;
+	if (arr[numb_r-1].Flag_r == 1)
+		{
+			std::cout << arr[numb_r-1].Id_r << ' ' << arr[numb_r-1].Name_r << std::endl;
+			for (int j = 0; j<2; j++)
+			{
+				std::cout << "#"<< j+1 << ':' << arr[numb_r-1].Book_r[j] << ' ';
+			}
+			std::cout << std::endl;
+		}
+	else
+		{
+			std::cout << "Reader not found. Maybe removed.";
+		}
+	std::cout <<"Which book to replace, enter the book number: ";
+	std::cin >> choice_b;
 	std::cout << "input Name Book: ";
-	std::cin.getline(arr[0].Book_r[0], 25);
+	std::cin.ignore();
+	std::cin.getline(arr[numb_r-1].Book_r[choice_b-1], 25);	
 	std::ofstream read_book_rw ("Reader.bin");
 	read_book_rw.write(reinterpret_cast<char*>(&arr),sizeof(arr));
 	read_book_rw.close();
-	
 }
 
 /*void answer ()
@@ -223,7 +246,7 @@ void rw_read()
 int main ()
 {
 	
-	reader_book_rw();
+	//reader_book_rw();
 	reader_book_r();
 	//reader_removed();
 	//rw_read();
