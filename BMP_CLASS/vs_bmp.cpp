@@ -12,6 +12,7 @@ int main()
 	obj.readfilebmp();
 	obj.WRITEFILE();
 	std::cout << obj.count << std::endl;
-	std::cout << obj.biWidth%8 << std::endl;
-	std::cout << obj.biHeight%8 << std::endl;
+	obj.HeightF();
+	obj.WidthF();	
+	obj.counPix();
 }

@@ -85,8 +85,18 @@ public:
 		fclose(pFile);
 		
 	}
-
-
+	void HeightF()
+	{
+		std::cout << "Height: " <<  biHeight << std::endl;
+	}
+	void WidthF()
+	{
+		std::cout << "Width: " <<  biWidth << std::endl;
+	}
+	void counPix()
+	{
+		std::cout << "Pixels: " << biHeight * biWidth << std::endl;
+	}
 	void WRITEFILE() {
 
 		FILE *oFile = fopen("output.bmp", "wb");
@@ -117,9 +127,9 @@ public:
 			putc(s, oFile);
 			putc(s, oFile);
 			if (((pixels[i].rgbRed * 0.2126) + (pixels[i].rgbGreen * 0.7152) + (pixels[i].rgbBlue * 0.0722)) > 0x80) // link https://en.wikipedia.org/wiki/Relative_luminance
-			{
-				count++;
-			}
+				{
+					count++;
+				}
 		}
 		fclose(oFile);
 		delete pixels;
